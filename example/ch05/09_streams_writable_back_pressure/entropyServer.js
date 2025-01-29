@@ -11,7 +11,7 @@ require('http').createServer((req, res) => {
     while(chance.bool({likelihood: 95})) {
       const shouldContinue = res.write(
         chance.string({length: (16 * 1024) - 1}) // ❷
-    );
+      );
       if(!shouldContinue) {                      // ❸
         console.log('Backpressure');
         return res.once('drain', generateMore);

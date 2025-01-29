@@ -3,6 +3,7 @@
 
 module.exports = function(callbackBasedApi) {
   return function promisified() {
+    // argumentsオブジェクトを配列に変換
     const args = [].slice.call(arguments);
     return new Promise((resolve, reject) => {    // ❶
       args.push(function(err, result) {                // ❷

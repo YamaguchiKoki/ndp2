@@ -18,6 +18,7 @@ class ReplaceStream extends stream.Transform {
     const lastPiece = pieces[pieces.length - 1];
     const tailPieceLen = this.searchString.length - 1;
 
+    // 入力チャンク間で検索文字列が分断されていても対応できるよう、検索文字列の長さに対応した長さ分だけスライスし、次回検証時に繋げてから検証する
     this.tailPiece = lastPiece.slice(-tailPieceLen);   // ❷
     pieces[pieces.length - 1] = lastPiece.slice(0,-tailPieceLen);
 
@@ -25,6 +26,7 @@ class ReplaceStream extends stream.Transform {
     callback();
   }
 
+  // 内部バッファに残ったチャンクを書き出す
   _flush(callback) {
     this.push(this.tailPiece);
     callback();
